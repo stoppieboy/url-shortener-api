@@ -7,8 +7,11 @@ const map = new Map()
 app.get('/:short_url', (req, res) => {
     const {short_url} = req.params;
     console.log(short_url);
-    res.redirect(map.get(short_url))
-    // res.send(url).status(200);
+    const long_url = map.get(short_url)
+    if(!long_url){
+        res.status(404).send("URL not found");
+    }
+    res.redirect(301, long_url)
 })
 
 app.post('/create-url', (req, res) => {
