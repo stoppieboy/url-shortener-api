@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="/styles/get-url-page.css">
+</head>
+<body>
+    <h1><%= title %></h1>
+    <form action="<%= api_url %>" method="post">
+        <label for="long_url">Original URI</label>
+        <input type="text" name="url" id="long_url">
+        <button type="submit">Get your short url</button>
+    </form>
+</body>
+</html>
