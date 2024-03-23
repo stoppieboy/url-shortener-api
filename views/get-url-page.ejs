@@ -7,11 +7,27 @@
     <link rel="stylesheet" href="/styles/get-url-page.css">
 </head>
 <body>
-    <h1><%= title %></h1>
-    <form action="<%= api_url %>" method="post">
-        <label for="long_url">Original URI</label>
-        <input type="text" name="url" id="long_url">
-        <button type="submit">Get your short url</button>
-    </form>
+    <div id="container">
+        <h1 id="heading"><%= title %></h1>
+        <% if (!key) { %>
+            <form action="<%= api_url %>" method="post">
+                <input id="input-box" type="text" name="url" id="long_url" placeholder="Original URL">
+                <button id="submit-button" type="submit">Get your short url</button>
+            </form>
+        <% }else{ %>
+            <div id="result-container">
+                <h2 id="result-heading">This is your Mini URL: </h2><input type="text" id="result" value="<%= key %>" size="6" onclick="copyText(event)" readonly/>
+                <p style="text-align: center;font-size: large;font-weight: 600;">Click the text to copy.</p>
+            </div>
+        <% } %>
+    </div>
+    <script>
+        function copyText(e){
+            // console.log("result: "+e.target.value)
+            // const text = e.value
+            navigator.clipboard.writeText(e.target.value)
+            alert('copied');
+        }
+    </script>
 </body>
 </html>

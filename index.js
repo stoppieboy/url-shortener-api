@@ -4,6 +4,7 @@ const express = require("express")
 const app = express();
 const path = require('path')
 const crypto = require('crypto')
+// const fs = require('fs')
 const pool = require('./db');
 const limiter = require('express-rate-limit')({
     windowMs: 1*60*1000,
@@ -18,11 +19,10 @@ app.use(express.urlencoded({extended: true}))   // necessary to take form data f
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 
-
-
 const API_URL = "/create-url";
 
 
+// ---------- ROUTES ------------
 
 app.get('/fetch/:short_url', async (req, res) => {
     const {short_url} = req.params;
@@ -41,18 +41,26 @@ app.get('/fetch/:short_url', async (req, res) => {
 
 app.get('/api/create-url', (req, res) => {
     res.render('get-url-page', {
-        title: "Page",
+        title: "Get your Mini URL",
         api_url: API_URL,
+        key: null,
     });
 })
 
 app.post(API_URL, async (req, res) => {
     const { url } = req.body;
-    const hashed_url = crypto.createHash('sha1').update(url).digest('hex');
-    const key = `tiny${hashed_url.substring(hashed_url.length-7)}`;
-    const result = await pool.query('INSERT INTO url_map VALUES($1, $2) on conflict(short_url) do nothing;',[key, url]);
-    console.log('create url endpoint: ',result.rows);
-    res.send(`This is your key: ${key}`);
+    hashed_url = crypto.createHash('shake256',{outputLength: 5}).update(url).digest('base64url');
+    const result = await pool.query('INSERT INTO url_map(short_url, long_url) VALUES($1, $2) on conflict(short_url) do nothing;',[hashed_url, url]);
+
+    // reset the sequence in case of conflict due to duplicate entry in the database.
+    if(result.rows.length == 0)
+        await pool.query('select setval($1, MAX(id)) from url_map;', ['url_map_id_seq']);
+
+    res.render('get-url-page', {
+        title: "Get your Mini URL",
+        api_url: null,
+        key: hashed_url
+    });
 })
 
 app.get('/api/test', (req, res) => {
