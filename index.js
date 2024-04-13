@@ -3,7 +3,6 @@ require("dotenv").config()
 const express = require("express")
 const app = express();
 const path = require('path')
-// const fs = require('fs')
 const limiter = require('express-rate-limit')({
     windowMs: 1*60*1000,
     max: 200,

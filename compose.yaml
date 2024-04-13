@@ -5,8 +5,8 @@ services:
     build:
       dockerfile: express.dockerfile
     environment:
-      - DB_URL='db'
-      - NODE_ENV='production'
+      - DB_URL=db
+      - NODE_ENV=production
     ports:
       - 3000:3000
     depends_on:
