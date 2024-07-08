@@ -37,7 +37,7 @@ app.set("view engine", "ejs")
 
 app.use(REDIRECTION_API_ENDPOINT, redirectionController) //shortening endpoint
 
-app.get('/api/create-url', (req, res) => {
+app.get('/', (req, res) => {
     res.render('get-url-page', {
         title: "Get your Mini URL",
         api_url: SHORTENING_API_ENDPOINT,

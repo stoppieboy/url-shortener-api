@@ -16,8 +16,10 @@
             </form>
         <% }else{ %>
             <div id="result-container">
-                <h2 id="result-heading">This is your Mini URL: </h2><input type="text" id="result" value="<%= key %>" size="6" readonly/>
+                <h2 id="result-heading">This is your Mini URL: </h2><br>
+                <input type="text" id="result" value="https://url-shortener-api-smoky.vercel.app/fetch/<%= key %>" size="46" readonly/>
                 <p style="text-align: center;font-size: large;font-weight: 600;">Click the text to copy.</p>
+                <p></p>
             </div>
         <% } %>
     </div>
