@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
             key: hashed_url
         });
     }catch(err){
-        res.status(500).json({success: false, error: err})
+        res.status(500).json({success: false, error: 'error in shortening controller'})
     }
 })
 

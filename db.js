@@ -4,7 +4,6 @@ var pool
 const ce = process.env.CUSTOM_ENV
 console.log('ce:',ce)
 if(process.env.CUSTOM_ENV === "vercel"){
-    console.log('here')
     pool = new Pool({
         connectionString: process.env.DB_URL
     })
@@ -23,5 +22,7 @@ pool.connect((err) => {
     if(err) throw err
     console.log("Connected to PostgreSQL successfully")
 })
+
+pool.query("CREATE TABLE IF NOT EXISTS url_map(id serial, short_url TEXT PRIMARY KEY, long_url text);")
 
 module.exports = pool;
