@@ -16,18 +16,11 @@
             </form>
         <% }else{ %>
             <div id="result-container">
-                <h2 id="result-heading">This is your Mini URL: </h2><input type="text" id="result" value="<%= key %>" size="6" onclick="copyText(event)" readonly/>
+                <h2 id="result-heading">This is your Mini URL: </h2><input type="text" id="result" value="<%= key %>" size="6" readonly/>
                 <p style="text-align: center;font-size: large;font-weight: 600;">Click the text to copy.</p>
             </div>
         <% } %>
     </div>
-    <script>
-        function copyText(e){
-            // console.log("result: "+e.target.value)
-            // const text = e.value
-            navigator.clipboard.writeText(e.target.value)
-            alert('copied');
-        }
-    </script>
+    <script src="/script.js"></script>
 </body>
 </html>
